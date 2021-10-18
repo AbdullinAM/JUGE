@@ -5,6 +5,9 @@ FROM ubuntu:20.04
 RUN apt-get update
 RUN apt-get install -y openjdk-8-jdk
 RUN apt-get install -y unzip
+RUN apt-get install -y git
+RUN apt-get install -y z3
+RUN apt-get install -y libz3-java
 
 # SMT Solver 
 RUN apt-get install -y cvc4
