@@ -199,15 +199,19 @@ public class JaCoCoLauncher {
             // information:
             final CoverageBuilder coverageBuilder = new CoverageBuilder();
             final Analyzer analyzer = new Analyzer(executionData, coverageBuilder);
-            int n = analyzer.analyzeAll(jar_to_instrument.get(index));
-            Main.debug("Number of file with coverage information = " + n);
-            /**/
-            // Let's dump some metrics and line coverage information:
-            for (final IClassCoverage cc : coverageBuilder.getClasses()) {
-                if (cc.getName().equals(targetClass)) {
-                    Main.debug("Extracted coverage data for the class " + targetClass);
-                    results = new JacocoResult(cc);
+            try {
+                int n = analyzer.analyzeAll(jar_to_instrument.get(index));
+                Main.debug("Number of file with coverage information = " + n);
+                /**/
+                // Let's dump some metrics and line coverage information:
+                for (final IClassCoverage cc : coverageBuilder.getClasses()) {
+                    if (cc.getName().equals(targetClass)) {
+                        Main.debug("Extracted coverage data for the class " + targetClass);
+                        results = new JacocoResult(cc);
+                    }
                 }
+            } catch (Throwable e) {
+                e.printStackTrace(Main.debugStr);
             }
         }
         // delete instrumented files
