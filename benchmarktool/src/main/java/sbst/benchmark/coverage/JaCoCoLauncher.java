@@ -164,7 +164,11 @@ public class JaCoCoLauncher {
                 InputStream input = new FileInputStream(jar_to_instrument.get(index));
                 // jar with instrumented classes
                 OutputStream output = new FileOutputStream(instrumented_jar.get(index));
-                tot_instrumented_class += instr.instrumentAll(input, output, "");
+                try {
+                    tot_instrumented_class += instr.instrumentAll(input, output, "");
+                } catch (Throwable e) {
+                    e.printStackTrace(Main.debugStr);
+                }
             }
         }
         Main.debug("Number of instrumented file = " + tot_instrumented_class);
